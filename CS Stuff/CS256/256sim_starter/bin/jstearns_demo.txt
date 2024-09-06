@@ -1,0 +1,64 @@
+# Demo (author: Joe Stearns)
+# This code assumes that the pixels for the matrix take up addr 128-191 and the 3 buttons take up 192-194
+
+# Set $1 to 0
+seti $1 0
+
+startPrgm:
+  # Set $0 to 128
+  seti $0 -128
+ 
+  # Add 1 to $1
+  addi $1 1
+ 
+  # Check if $1 = 8 (invalid color)
+  seti $6 8
+  beq $1 restartColor
+ 
+  # Set $6 to 192
+  seti $6 -64
+ 
+# light up every pixel starting from 0 to value 1
+lightOne:
+  # Check if on last I/O device $0 = 192 (addr of non-existing LED)
+  beq $0 exitLightOne
+ 
+  # Store $1 for value of $0
+  sb $1 $0
+ 
+  # Increase mem addr for next I/O
+  addi $0 1
+ 
+  # Jump back to start of loop
+  jal lightOne
+ 
+exitLightOne:
+  # Set $0 to 191 (last LED)
+  seti $0 -65
+
+  # Set $2 to 0
+  seti $2 0
+
+  # Set $6 to 127
+  seti $6 127
+    
+turnOff:
+  # Check if on first I/O device $0 = 127 (addr of non-existing LED)
+  beq $0 exitTurnOff
+
+  # Store $2 for value of $0
+  sb $2 $0
+ 
+  # Decrease mem addr for next I/O
+  addi $0 -1
+ 
+  # Jump back to start of loop
+  jal turnOff
+    
+exitTurnOff: 
+  # Return to start of program and repeat
+  jal startPrgm
+	 
+restartColor:
+  seti $1 0
+  jal startPrgm

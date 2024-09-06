@@ -1,0 +1,13 @@
+  seti $4 0
+  seti $5 1
+  seti $6 1
+  seti $7 2
+loop:   
+  lb $1 $4 
+  lb $2 $5  
+  lb $3 $7  
+  beq $3 endloop
+  bne $3 loop
+endloop:
+  sb $1 $4  
+  sb $2 $5  

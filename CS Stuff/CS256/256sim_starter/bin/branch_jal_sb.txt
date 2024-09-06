@@ -1,0 +1,10 @@
+  seti $0 50
+  seti $1 1
+  move $6 $1
+label1:
+  sb $0 $0
+  sub $0 $0 $1
+  bne $0 label1
+  jal end 
+end:
+  seti $7 255

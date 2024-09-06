@@ -1,0 +1,12 @@
+label0:
+  addi $0 10
+  move $1 $0
+  move $2 $0
+  move $3 $0
+  move $4 $0
+  move $5 $0
+  move $6 $0
+  beq $0 label0
+
+label1:
+  addi $7 50
